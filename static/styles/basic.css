@@ -1,0 +1,28 @@
+body {
+  font-family: 'Cabin', serif;
+  background-color: #2b3137;
+}
+
+.navbar-custom {
+  background-color: #24292e;
+  color: White;
+  font-size: 3vh;
+}
+
+.welcome-home {
+  color: White;
+  left: 10%;
+  top: 20%;
+  width: 50%;
+  position: absolute;
+}
+
+.welcome-welcome-home {
+  font-size: 8vh;
+}
+
+.welcome-home-text {
+  font-size: 3vh;
+  position: absolute;
+  left: 5%;
+}
