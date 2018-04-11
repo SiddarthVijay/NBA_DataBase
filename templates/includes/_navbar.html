@@ -8,7 +8,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item active nav-item-a">
         <a class="nav-link nav-up" href="/about">About <span class="sr-only">(current)</span></a>
       </li>
     </ul>
@@ -21,10 +21,10 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Login</a>
-          <a class="dropdown-item" href="#">Sign Up</a>
+          <a class="dropdown-item" data-toggle="collapse" href="#login" role="button" aria-expanded="false" aria-controls="collapseExample">Login</a>
+          <a class="dropdown-item" data-toggle="collapse" href="#signup" role="button" aria-expanded="false" aria-controls="collapseExample">Sign Up</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">About SegFault</a>
+          <a class="dropdown-item" href="/about">About SegFault</a>
         </div>
       </li>
     </ul>

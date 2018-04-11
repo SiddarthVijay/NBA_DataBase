@@ -43,6 +43,10 @@ mysql = MySQL(app)
 def index():
     return render_template('home.html')
 
+# Redirecting to the about page
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 # Running the app if app.py is the main module
 if __name__ == '__main__':

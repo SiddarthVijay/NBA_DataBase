@@ -1,14 +1,24 @@
 body {
-  font-family: 'Cabin', serif;
   background-color: #2b3137;
+  font-family: 'Cabin', serif;
+}
+
+.main-background {
+  background-image: url(https://devanshmanu.github.io/foot.png);
+  background-size: cover;
+}
+
+a:active, a:focus {
+  border: none;
+  outline: 0;
+  -moz-outline-style: none
 }
 
 .navbar-custom {
-  background-color: #24292e;
+  background-color: transparent;
   color: White;
   font-size: 3vh;
 }
-
 .nav-up {
   position: absolute;
   top: 6%;
@@ -17,35 +27,68 @@ body {
 .welcome-home {
   color: White;
   left: 10%;
+  position: absolute;
+  right: 50%;
   top: 20%;
   width: 50%;
-  right: 50%;
-  position: absolute;
 }
-
 .welcome-welcome-home {
   font-size: 6vh;
 }
-
 .welcome-home-text {
   font-size: 2.8vh;
-  position: absolute;
   left: 5%;
   padding-right: 1vh;
+  position: absolute;
 }
 
 .home-right {
-  left: 65%;
-  width: 30%;
-  top: 20%;
-  position: absolute;
   background-color: #cdcac1;
   border-radius: 0.5vh;
+  left: 65%;
+  position: absolute;
+  top: 20%;
   transition: 5ms;
+  width: 30%;
 }
-
 .home-right-text {
+  color: #24292e;
   font-size: 2.8vh;
   padding: 1vh;
-  color: #24292e;
+}
+
+.about {
+  color: White;
+  font-family: 'Cabin', serif;
+  font-size: 2.8vh;
+  left: 10%;
+  position: absolute;
+  top: 20%;
+  width: 70%;
+}
+.about h1 {
+  font-size: 6vh;
+}
+
+.nav-item-a a {
+  color: White;
+  transition: all ease-in-out 250ms;
+}
+.nav-item-a a:hover {
+  color: #6c757d;
+}
+
+nav a {
+  color: White;
+  transition: all ease-in-out 250ms;
+}
+nav a:hover {
+  color: #6c757d;
+}
+
+ul.mr-right div a {
+  transition: all ease-in-out 250ms;
+}
+ul.mr-right div a:hover {
+  color: #6c757d;
 }
