@@ -5,8 +5,75 @@
     <div class="welcome-welcome-home">
       <p>Welcome,</p>
       <div class="welcome-home-text">
-        <p>This is a web-app based on StackOverflow<br></p>
+        <p>This is a web-app based on StackOverflow<br>Made by,</p>
+        <ol>
+          <li>Siddarth Vijay, IIIT-H</li>
+          <li>Anush Mahajan, IIIT-H</li>
+        </ol>
+        <p>This platfor can be used to ask, answer, upvote, read questions and asnwers</p>
+        <p>Anyone can read the questions, but to answer or ask questions one has to sign up</p>
       </div>
+    </div>
+  </div>
+  <div class="home-right">
+    <div class="home-right-text">
+      <p>To access the full features of SegFault,</p>
+      <p>Please Login or Signup</p>
+    </div>
+    <div class="home-ls">
+        <p class="text-center">
+          <a class="btn btn-secondary btn-lg" data-toggle="collapse" href="#login" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Log In
+          </a>
+          <button class="btn btn-warning btn-lg" type="button" data-toggle="collapse" data-target="#signup" aria-expanded="false" aria-controls="collapseExample">
+            Sign Up
+          </button>
+        </p>
+        <div class="collapse" id="login">
+          <div class="card card-body">
+            <form>
+              <div class="form-group">
+                <label for="InputEmail">Email address or Username</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="InputPassword">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+          </div>
+        </div>
+        <div class="collapse" id="signup">
+          <div class="card card-body">
+            <form>
+              <div class="form-group">
+                <label for="Name">First And Last Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your name">
+              </div>
+              <div class="form-group">
+                <label for="InputEmail">Username</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your username">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <hr>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">I Agree To All Terms And Conditions</label>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your details with anyone else.</small>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+          </div>
+        </div>
     </div>
   </div>
 {% endblock %}

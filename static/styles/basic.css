@@ -9,20 +9,43 @@ body {
   font-size: 3vh;
 }
 
+.nav-up {
+  position: absolute;
+  top: 6%;
+}
+
 .welcome-home {
   color: White;
   left: 10%;
   top: 20%;
   width: 50%;
+  right: 50%;
   position: absolute;
 }
 
 .welcome-welcome-home {
-  font-size: 8vh;
+  font-size: 6vh;
 }
 
 .welcome-home-text {
-  font-size: 3vh;
+  font-size: 2.8vh;
   position: absolute;
   left: 5%;
+  padding-right: 1vh;
+}
+
+.home-right {
+  left: 65%;
+  width: 30%;
+  top: 20%;
+  position: absolute;
+  background-color: #cdcac1;
+  border-radius: 0.5vh;
+  transition: 5ms;
+}
+
+.home-right-text {
+  font-size: 2.8vh;
+  padding: 1vh;
+  color: #24292e;
 }
