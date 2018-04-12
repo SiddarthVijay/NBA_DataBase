@@ -72,7 +72,7 @@ a:active, a:focus {
 
 .nav-item-a a {
   color: White;
-  transition: all ease-in-out 250ms;
+  transition: all ease-in-out 200ms;
 }
 .nav-item-a a:hover {
   color: #6c757d;
@@ -80,14 +80,14 @@ a:active, a:focus {
 
 nav a {
   color: White;
-  transition: all ease-in-out 250ms;
+  transition: all ease-in-out 200ms;
 }
 nav a:hover {
   color: #6c757d;
 }
 
 ul.mr-right div a {
-  transition: all ease-in-out 250ms;
+  transition: all ease-in-out 200ms;
 }
 ul.mr-right div a:hover {
   color: #6c757d;
