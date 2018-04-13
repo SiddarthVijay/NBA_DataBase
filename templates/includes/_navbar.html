@@ -8,9 +8,19 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+      {% if session.logged_in %}
+        <li class="nav-item active nav-item-a">
+          <a class="nav-link" href="/dashboard">Dashboard<span class="sr-only">(current)</span></a>
+        </li>
+      {% endif %}
       <li class="nav-item active nav-item-a">
-        <a class="nav-link" href="/dashboard">Dashboard<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/questions">All Questions</a>
       </li>
+      {% if session.logged_in %}
+        <li class="nav-item active nav-item-a">
+          <a class="nav-link" href="/addquestion">Ask a Question</a>
+        </li>
+      {% endif %}
       <li class="nav-item active nav-item-a">
         <a class="nav-link" href="/about">About</a>
       </li>
@@ -25,15 +35,15 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           {% if session.logged_in %}
-          <a class="dropdown-item" href="/Dashboard" role="button">Dashboard</a>
-          <a class="dropdown-item" href="/profile" role="button">Profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/logout" role="button" >Logout</a>
+            <a class="dropdown-item" href="/dashboard" role="button">Dashboard</a>
+            <a class="dropdown-item" href="/profile" role="button">Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/logout" role="button" >Logout</a>
           {% else %}
-          <a class="dropdown-item" href="/login" role="button">Login</a>
-          <a class="dropdown-item" href="/signup" role="button" >Sign Up</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/about">About SegFault</a>
+            <a class="dropdown-item" href="/login" role="button">Login</a>
+            <a class="dropdown-item" href="/signup" role="button" >Sign Up</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/about">About SegFault</a>
           {% endif %}
         </div>
       </li>

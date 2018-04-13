@@ -81,6 +81,26 @@ def dashboard():
     return render_template('dashboard.html')
 
 
+# Accessing the user profile
+@app.route('/profile')
+@is_loggedin
+def profile():
+    # cursor
+    cur = mysql.connection.cursor()
+    username = session['username']
+
+    # Get user by username
+    result = cur.execute("SELECT * FROM users where user_username = %s", [username])
+    if result > 0:
+        data = cur.fetchone()
+        name = data['user_name']
+        email = data['user_email']
+        id = data['user_id']
+        date = data['register_date']
+
+    return render_template('profile.html', name=name, email=email, id=id, date=date)
+
+
 # Register page
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -156,6 +176,49 @@ def logout():
     session.clear()
     flash('You are now logged out', 'success')
     return redirect(url_for('login'))
+
+
+# Question Class
+class QuestionForm(Form):
+    statement = StringField('Question', [validators.Length(min=1, max=280)])
+    body = TextAreaField('Description', [validators.Length(max=500)])
+
+
+# Add Question Page
+@app.route('/addquestion', methods=['GET', 'POST'])
+@is_loggedin
+def addquestion():
+    form = QuestionForm(request.form)
+    if request.method == 'POST' and form.validate():
+        statement = form.statement.data
+        body = form.body.data
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO questions(statement,body,poster) VALUES(%s, %s, %s)",(statement, body, session['username']))
+
+        mysql.connection.commit()
+        cur.close()
+        flash('Question Posted', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('addquestion.html', form=form)
+
+
+@app.route('/questions')
+def question():
+    cur = mysql.connection.cursor()
+
+
+    result = cur.execute("SELECT * FROM questions")
+
+
+    qs = cur.fetchall()
+    if result > 0 :
+        return render_template('questions.html', qs=qs)
+    else :
+        msg = "No article found"
+        return render_template('questions.html',msg=msg)
+    cur.close()
 
 
 # Running the app if app.py is the main module
