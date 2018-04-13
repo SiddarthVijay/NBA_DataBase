@@ -23,10 +23,13 @@
   <body class="main-background">
     {% include 'includes/_navbar.html' %}
     <div class="container-fluid">
-      {% include 'includes/_messages.html' %}
 
       {% block body %}
       {% endblock %}
+
+      <div class="fixed-bottom">
+        {% include 'includes/_messages.html' %}
+      </div>
     </div>
 
     <!-- Optional JavaScript -->

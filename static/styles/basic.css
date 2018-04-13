@@ -103,5 +103,9 @@ ul.mr-right div a:hover {
 }
 
 .move-dw {
-  top: 5%;
+  top: 40%;
+}
+
+.alert.alert-server {
+  margin-bottom: 0;
 }
