@@ -63,8 +63,43 @@ def is_loggedin(f):
 
 
 # Redirecting to Home page
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        # Get form fields
+        username = request.form['username']
+        password_candidate = request.form['password']
+
+        # cursor
+        cur = mysql.connection.cursor()
+
+        # Get user by username
+        result = cur.execute("SELECT * FROM users where user_username = %s", [username])
+
+        if result > 0:
+            # Get stored hash
+            data = cur.fetchone()
+            password = data['password']
+
+            # Compare Passwords
+            if sha256_crypt.verify(password_candidate, password):
+                # Correct password
+                session['logged_in'] = True
+                session['username'] = username
+
+                # Flash will flash a message
+                flash('You are now logged in', 'success')
+                return redirect(url_for('dashboard'))
+            else:
+                error = 'Wrong Password'
+                return render_template('home.html', error=error)
+
+            # Close the connection to the database
+            cur.close()
+        else:
+            error = 'Username Not Found'
+            return render_template('home.html', error=error)
+
     return render_template('home.html')
 
 
@@ -209,15 +244,26 @@ def question():
     cur = mysql.connection.cursor()
 
 
-    result = cur.execute("SELECT * FROM questions")
+    result = cur.execute("SELECT * FROM questions ORDER BY id DESC")
 
 
     qs = cur.fetchall()
-    if result > 0 :
+    if result > 0:
         return render_template('questions.html', qs=qs)
-    else :
+    else:
         msg = "No article found"
         return render_template('questions.html',msg=msg)
+    cur.close()
+
+
+@app.route('/question/<string:id>/')
+def questions(id):
+    cur = mysql.connection.cursor()
+
+    result = cur.execute("SELECT * FROM questions WHERE id = %s",[id])
+    one_qs = cur.fetchone()
+
+    return render_template('question.html',one_qs=one_qs)
     cur.close()
 
 

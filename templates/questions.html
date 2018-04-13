@@ -3,15 +3,13 @@
   <div class="questions1">
     <table class="table table-striped questions1-table">
       <tr class= "table-header">
-        <th>ID</th>
         <th>Question</th>
         <th>Author</th>
         <th>Date</th>
       </tr>
     {% for quest in qs %}
       <tr>
-        <td>{{quest.id}}</td>
-        <td><a href="#">{{quest.statement}}</a></td>
+        <td><a href="question/{{quest.id}}">{{quest.statement}}</a></td>
         <td>{{quest.poster}}</td>
         <td>{{quest.askDate}}</td>
       </tr>

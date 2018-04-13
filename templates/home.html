@@ -31,14 +31,14 @@
         </p>
         <div class="collapse" id="login">
           <div class="card card-body">
-            <form>
+            <form method="POST">
               <div class="form-group">
-                <label for="InputEmail">Email address or Username</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter Username" value={{request.form.username}}>
               </div>
               <div class="form-group">
-                <label for="InputPassword">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter Password" value={{request.form.password}}>
               </div>
               <button type="submit" class="btn btn-success">Submit</button>
             </form>
@@ -46,7 +46,7 @@
         </div>
         <div class="collapse" id="signup">
           <div class="card card-body">
-            <form>
+            <form method="POST">
               <div class="form-group">
                 <label for="Name">First And Last Name</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your name">

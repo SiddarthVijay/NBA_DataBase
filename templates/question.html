@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block body %}
+  <div class="card centred-answer">
+    <div class="card-header">
+      Q:  {{one_qs.statement}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-text">{{one_qs.body | safe}}</h5>
+      <div class="text-right">
+        <a href="/answer/{{one_qs.id}}" class="btn btn-primary" name="submit">Answer Question</a>
+      </div>
+    </div>
+    <div class="card-footer text-muted text-center">
+      <small>Asked By {{one_qs.poster}} on {{one_qs.askDate}}</small>
+    </div>
+  </div>
+{% endblock %}
