@@ -1,0 +1,9 @@
+.dashboard {
+  color: White;
+  left: 5%;
+  position: absolute;
+  top: 10%;
+}
+.dashboard-top {
+  font-size: 6vh;
+}

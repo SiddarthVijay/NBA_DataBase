@@ -19,10 +19,6 @@ a:active, a:focus {
   color: White;
   font-size: 3vh;
 }
-.nav-up {
-  position: absolute;
-  top: 6%;
-}
 
 .welcome-home {
   color: White;
@@ -61,9 +57,9 @@ a:active, a:focus {
   color: White;
   font-family: 'Cabin', serif;
   font-size: 2.8vh;
-  left: 10%;
+  left: 5%;
   position: absolute;
-  top: 20%;
+  top: 10%;
   width: 70%;
 }
 .about h1 {
@@ -91,4 +87,21 @@ ul.mr-right div a {
 }
 ul.mr-right div a:hover {
   color: #6c757d;
+}
+
+.centred {
+  background-color: White;
+  width: 30%;
+  padding: 1.5%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  border-radius: 0.5vh;
+}
+ .submit {
+  margin-left: 40%;
+}
+
+.move-dw {
+  top: 5%;
 }
