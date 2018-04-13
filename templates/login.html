@@ -1,15 +1,15 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-  <form class="centred">
+  <form class="centred" method="POST">
     <div class="form-group">
-      <label for="InputEmail">Email or Username</label>
-      <input type="email" class = "form-control" placeholder="Enter Email">
+      <label>Username</label>
+      <input type="text" name="username" class="form-control" placeholder="Enter Username" value={{request.form.username}}>
     </div>
     <div class="form-group">
-      <label for="InputPassword">Password</label>
-      <input type="password" class = "form-control" placeholder="Enter Password">
+      <label>Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Enter Password" value={{request.form.password}}>
     </div>
-    <button type="submit" class="btn btn-success submit">Submit</button>
+    <button type="submit" class="btn btn-primary submit">Login</button>
   </form>
 {% endblock %}

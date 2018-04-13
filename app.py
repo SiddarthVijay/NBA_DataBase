@@ -50,6 +50,18 @@ class RegisterForm(Form):
     confirm = PasswordField('Confirm Password')
 
 
+# Check if user logged in
+def is_loggedin(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorized, Please Login first', 'danger')
+            return redirect(url_for('login'))
+    return wrap
+
+
 # Redirecting to Home page
 @app.route('/')
 def index():
@@ -64,6 +76,7 @@ def about():
 
 # Redirecting to the dashboard
 @app.route('/dashboard')
+@is_loggedin
 def dashboard():
     return render_template('dashboard.html')
 
@@ -93,6 +106,57 @@ def signup():
 
         return redirect(url_for('index'))
     return render_template('signup.html', form=form)
+
+
+# User login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Get form fields
+        username = request.form['username']
+        password_candidate = request.form['password']
+
+        # cursor
+        cur = mysql.connection.cursor()
+
+        # Get user by username
+        result = cur.execute("SELECT * FROM users where user_username = %s", [username])
+
+        if result > 0:
+            # Get stored hash
+            data = cur.fetchone()
+            password = data['password']
+
+            # Compare Passwords
+            if sha256_crypt.verify(password_candidate, password):
+                # Correct password
+                session['logged_in'] = True
+                session['username'] = username
+
+                # Flash will flash a message
+                flash('You are now logged in', 'success')
+                return redirect(url_for('dashboard'))
+            else:
+                error = 'Wrong Password'
+                return render_template('login.html', error=error)
+
+            # Close the connection to the database
+            cur.close()
+        else:
+            error = 'Username Not Found'
+            return render_template('login.html', error=error)
+
+    return render_template('login.html')
+
+
+# Logout
+@app.route('/logout')
+@is_loggedin
+def logout():
+    session.clear()
+    flash('You are now logged out', 'success')
+    return redirect(url_for('login'))
+
 
 # Running the app if app.py is the main module
 if __name__ == '__main__':
