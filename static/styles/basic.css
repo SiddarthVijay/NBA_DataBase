@@ -199,3 +199,7 @@ ul.mr-right div a:hover {
   border-radius: 0.5vh;
   font-size: 3vh;
 }
+
+.small-txt {
+  font-size: 2vh;
+}

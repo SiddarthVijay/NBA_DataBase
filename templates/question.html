@@ -23,6 +23,25 @@
     <div class="card-footer text-muted text-center">
       <h6>Answered By {{answer.author}} on {{answer.ansDate}}</h6>
     </div>
-  </div>
+    <div class="text-center">
+      <a class="" data-toggle="collapse" href="#collapseExample" role="" aria-expanded="false" aria-controls="collapseExample">
+        <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/516849-200.png" alt="Show Comments" width="42" height="42" border="0">
+      </a>
+    </div>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h6>
+          <h6><small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</small></h6>
+          <form class="" method="POST">
+            <div class="form-group row form-control-sm">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Add a Comment:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control form-control-sm" name="comment" placeholder="Type the comment here" value={{request.form.comment}}>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   {% endfor %}
 {% endblock %}
