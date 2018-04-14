@@ -1,17 +1,28 @@
 {% extends 'layout.html' %}
 {% block body %}
-  <div class="card centred-answer">
+  <div class="card centred-answer text-white bg-secondary">
     <div class="card-header">
       Q:  {{one_qs.statement}}
     </div>
     <div class="card-body">
       <h5 class="card-text">{{one_qs.body | safe}}</h5>
       <div class="text-right">
-        <a href="/answer/{{one_qs.id}}" class="btn btn-primary" name="submit">Answer Question</a>
+        <a href="/addanswer/{{one_qs.id}}" class="btn btn-primary" name="submit">Answer Question</a>
       </div>
     </div>
-    <div class="card-footer text-muted text-center">
-      <small>Asked By {{one_qs.poster}} on {{one_qs.askDate}}</small>
+    <div class="card-footer text-center text-dark">
+      <h6>Asked By {{one_qs.poster}} on {{one_qs.askDate}}</h6>
     </div>
   </div>
+
+  {% for answer in answers %}
+  <div class="card centred-answers bg-light">
+    <div class="card-body">
+      <h5 class="card-text">{{answer.body | safe}}</h5>
+    </div>
+    <div class="card-footer text-muted text-center">
+      <h6>Answered By {{answer.author}} on {{answer.ansDate}}</h6>
+    </div>
+  </div>
+  {% endfor %}
 {% endblock %}

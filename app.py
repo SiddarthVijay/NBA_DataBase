@@ -260,11 +260,51 @@ def question():
 def questions(id):
     cur = mysql.connection.cursor()
 
-    result = cur.execute("SELECT * FROM questions WHERE id = %s",[id])
-    one_qs = cur.fetchone()
 
-    return render_template('question.html',one_qs=one_qs)
+    cur.execute("SELECT * FROM questions WHERE id = %s",[id])
+    one_qs = cur.fetchone()
     cur.close()
+
+    cur2 = mysql.connection.cursor()
+
+    result = cur2.execute("SELECT * FROM answers WHERE qid = %s ORDER BY id DESC",[id])
+    answers = cur2.fetchall()
+    cur2.close()
+
+    if result > 0:
+        return render_template('question.html',one_qs=one_qs ,answers=answers)
+    else:
+        msg = "Not Answered Yet"
+        return render_template('question.html',one_qs=one_qs,msg=msg)
+
+
+class AnswerForm(Form):
+    body = TextAreaField('Your Answer:',[validators.Length(min=5)])
+
+
+@app.route('/addanswer/<string:id>', methods=['GET', 'POST'])
+@is_loggedin
+def addanswer(id):
+    form = AnswerForm(request.form)
+    cur2 = mysql.connection.cursor()
+
+    result = cur2.execute("SELECT * FROM questions WHERE id = %s",[id])
+    one_qs = cur2.fetchone()
+
+    cur2.close()
+
+    if request.method == 'POST' and form.validate():
+        body = form.body.data
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO answers(qid,body,author) VALUES(%s, %s, %s)",([id], body, session['username']))
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Question Answered', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('addanswer.html', form=form ,one_qs=one_qs)
 
 
 # Running the app if app.py is the main module
