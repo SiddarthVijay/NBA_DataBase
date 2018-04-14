@@ -260,12 +260,12 @@ def question():
 class CommentForm(Form):
     body = TextAreaField('Comment',[validators.Length(max=80)])
 
-@app.route('/question/<string:id>/',methods = ['GET','POST'])
-def questions(id):
 
+@app.route('/question/<string:id>/', methods=['GET', 'POST'])
+def questions(id):
     cur = mysql.connection.cursor()
 
-    if not 'logged_in' in session :
+    if 'logged_in' not in session:
         username = None
     else:
         username = session['username']
@@ -295,25 +295,24 @@ def questions(id):
         cur2.close()
     cur.close()
 
-    form = CommentForm(request.form)
-    if request.method == 'POST' and form.validate():
-        body = form.body.data
-        
-        cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        body = request.form['comment']
 
-        cur.execute("INSERT INTO comments(ansid,body,author) VALUES(%s, %s, %s)",([answer['id']], body, session['username']))
+        cur3 = mysql.connection.cursor()
+
+        cur3.execute("INSERT INTO comments(body,author) VALUES(%s, %s)",([body], session['username']))
 
         mysql.connection.commit()
-        cur.close()
+        cur3.close()
 
         flash('Comment Posted', 'success')
-        return redirect(url_for('questions'))
+        return redirect(url_for('question'))
 
     if result > 0:
-        return render_template('question.html', form=form, one_qs=one_qs, answers=answers, username=username, auths=auths, comments=comments)
+        return render_template('question.html', one_qs=one_qs, answers=answers, username=username, auths=auths)
     else:
         msg = "Not Answered Yet"
-        return render_template('question.html', form=form, one_qs=one_qs, msg=msg, username=username, auths=auths, comments=comments)
+        return render_template('question.html', one_qs=one_qs, msg=msg, username=username, auths=auths)
 
 
 class AnswerForm(Form):
