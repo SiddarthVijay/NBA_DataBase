@@ -201,5 +201,9 @@ ul.mr-right div a:hover {
 }
 
 .small-txt {
-  font-size: 2vh;
+  font-size: 1.5vh;
+}
+
+.fill-comment {
+  width: 150vh;
 }

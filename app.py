@@ -256,13 +256,26 @@ def question():
     cur.close()
 
 
-@app.route('/question/<string:id>/')
+# Comment form
+class CommentForm(Form):
+    body = TextAreaField('Comment',[validators.Length(max=80)])
+
+@app.route('/question/<string:id>/',methods = ['GET','POST'])
 def questions(id):
+
     cur = mysql.connection.cursor()
 
+    if not 'logged_in' in session :
+        username = None
+    else:
+        username = session['username']
 
     cur.execute("SELECT * FROM questions WHERE id = %s",[id])
     one_qs = cur.fetchone()
+    cur.close()
+
+    cur = mysql.connection.cursor()
+    auths = cur.execute("SELECT * FROM answers WHERE (author,qid) = (%s,%s)",([session['username']],[id]))
     cur.close()
 
     cur2 = mysql.connection.cursor()
@@ -271,11 +284,36 @@ def questions(id):
     answers = cur2.fetchall()
     cur2.close()
 
+    comments = []
+
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM answers WHERE qid = %s ORDER BY id DESC",[id])
+    for row in cur:
+        cur2 = mysql.connection.cursor()
+        cur2.execute("SELECT * FROM comments WHERE ansid = %s",[row['id']])
+        comments.append(cur2.fetchall())
+        cur2.close()
+    cur.close()
+
+    form = CommentForm(request.form)
+    if request.method == 'POST' and form.validate():
+        body = form.body.data
+        
+        cur = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO comments(ansid,body,author) VALUES(%s, %s, %s)",([answer['id']], body, session['username']))
+
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Comment Posted', 'success')
+        return redirect(url_for('questions'))
+
     if result > 0:
-        return render_template('question.html',one_qs=one_qs ,answers=answers)
+        return render_template('question.html', form=form, one_qs=one_qs, answers=answers, username=username, auths=auths, comments=comments)
     else:
         msg = "Not Answered Yet"
-        return render_template('question.html',one_qs=one_qs,msg=msg)
+        return render_template('question.html', form=form, one_qs=one_qs, msg=msg, username=username, auths=auths, comments=comments)
 
 
 class AnswerForm(Form):
