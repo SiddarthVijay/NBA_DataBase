@@ -23,7 +23,7 @@
           <tr>
             <td>{{question.id}}</td>
             <td>{{question.statement}}</td>
-            <td>{{question.body}}</td>
+            <td>{{question.body | safe}}</td>
             <td>{{question.askDate}}</td>
             <td><a href="editquestion/{{question.id}}" class="btn btn-secondary pull-right">Edit</a></td>
             <td>
