@@ -113,7 +113,20 @@ def about():
 @app.route('/dashboard')
 @is_loggedin
 def dashboard():
-    return render_template('dashboard.html')
+    username = session['username']
+    # Create cursor
+    cur = mysql.connection.cursor()
+
+    # Get questions
+    results = cur.execute("SELECT * FROM questions where poster = %s", [username])
+
+    questions = cur.fetchall()
+
+    if results>0:
+        return render_template('dashboard.html', questions=questions)
+    else:
+        msg = "No Questions Asked Yet"
+        return render_template('dashboard.html', msg=msg)
 
 
 # Accessing the user profile
@@ -256,6 +269,52 @@ def question():
     cur.close()
 
 
+@app.route('/editquestion/<string:id>',methods = ['GET','POST'])
+@is_loggedin
+def editquestion(id):
+    cur2 = mysql.connection.cursor()
+
+    result = cur2.execute("SELECT * FROM questions WHERE id = %s AND poster = %s",([id],[session['username']]))
+    one_qs = cur2.fetchone()
+
+    cur2.close()
+
+    form = QuestionForm(request.form)
+    form.statement.data = one_qs['statement']
+    form.body.data = one_qs['body']
+
+    if request.method == 'POST' and form.validate :
+        body = request.form['body']
+        statement = request.form['statement']
+
+        cur=mysql.connection.cursor()
+
+        cur.execute("UPDATE questions SET body=%s,statement=%s WHERE id = %s ",(body,statement,[id]))
+        mysql.connection.commit()
+        cur.close()
+
+        flash ('Question Updated','success')
+        return redirect(url_for('question'))
+    return render_template('editquestion.html',form=form,one_qs=one_qs)
+
+
+# Delete questions
+@app.route('/delete_question/<string:id>', methods=['POST'])
+@is_loggedin
+def delete_question(id):
+    # Create a cursor
+    cur = mysql.connection.cursor()
+
+    # Execute Cursor
+    cur.execute("DELETE FROM questions where id=%s", [id])
+
+    mysql.connection.commit()
+    cur.close()
+
+    flash ('Question Deleted','success')
+    return redirect(url_for('dashboard'))
+
+
 # Comment form
 class CommentForm(Form):
     body = TextAreaField('Comment',[validators.Length(max=80)])
@@ -295,18 +354,19 @@ def questions(id):
         cur2.close()
     cur.close()
 
-    if request.method == 'POST':
-        body = request.form['comment']
+    for answer in answers :
+        if request.method == 'POST':
+            body = request.form['comment']
 
-        cur3 = mysql.connection.cursor()
+            cur3 = mysql.connection.cursor()
 
-        cur3.execute("INSERT INTO comments(body,author) VALUES(%s, %s)",([body], session['username']))
+            cur3.execute("INSERT INTO comments(ansid,body,author) VALUES(%s, %s, %s)",(answer['id'],[body], session['username']))
 
-        mysql.connection.commit()
-        cur3.close()
+            mysql.connection.commit()
+            cur3.close()
 
-        flash('Comment Posted', 'success')
-        return redirect(url_for('question'))
+            flash('Comment Posted', 'success')
+            return redirect(url_for('question'))
 
     if result > 0:
         return render_template('question.html', one_qs=one_qs, answers=answers, username=username, auths=auths)
@@ -342,6 +402,39 @@ def addanswer(id):
         flash('Question Answered', 'success')
         return redirect(url_for('dashboard'))
     return render_template('addanswer.html', form=form ,one_qs=one_qs)
+
+
+@app.route('/editanswer/<string:id>',methods = ['GET','POST'])
+@is_loggedin
+def editanswer(id):
+    form = AnswerForm(request.form)
+    cur2 = mysql.connection.cursor()
+
+    result = cur2.execute("SELECT * FROM questions WHERE id = %s",[id])
+    one_qs = cur2.fetchone()
+
+    cur2.close()
+
+
+    cur = mysql.connection.cursor()
+
+    cur.execute("SELECT * FROM answers WHERE qid = %s AND author = %s ",([id],[session['username']]))
+    one_ans = cur.fetchone()
+
+    form.body.data = one_ans['body']
+
+    if request.method == 'POST' and form.validate :
+        body = request.form['body']
+
+        cur=mysql.connection.cursor()
+
+        cur.execute("UPDATE answers SET body=%s WHERE author = %s",(body,session['username']))
+        mysql.connection.commit()
+        cur.close()
+
+        flash ('Answer Updated','success')
+        return redirect(url_for('question'))
+    return render_template('editanswer.html',form=form,one_qs=one_qs)
 
 
 # Running the app if app.py is the main module

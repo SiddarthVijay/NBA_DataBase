@@ -5,5 +5,36 @@
     <div class="dashboard-top">
       Welcome {{session.username}},
     </div>
+    <hr>
+    <div class="question-table">
+      <h2>Your Questions,</h2>
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>ID</th>
+            <th>Question</th>
+            <th>Description</th>
+            <th>Date Posted</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        {% for question in questions %}
+          <tr>
+            <td>{{question.id}}</td>
+            <td>{{question.statement}}</td>
+            <td>{{question.body}}</td>
+            <td>{{question.askDate}}</td>
+            <td><a href="editquestion/{{question.id}}" class="btn btn-secondary pull-right">Edit</a></td>
+            <td>
+              <form action="{{ url_for('delete_question', id=question.id) }}" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" class="btn btn-danger" value="Delete">
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
   </div>
 {% endblock %}

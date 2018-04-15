@@ -8,7 +8,13 @@
     <div class="card-body">
       <h5 class="card-text">{{one_qs.body | safe}}</h5>
       <div class="text-right">
-        <a href="/addanswer/{{one_qs.id}}" class="btn btn-success" name="submit">Answer Question</a>
+        {% if username == one_qs.poster %}
+          <a href="/editquestion/{{one_qs.id}}" class="btn btn-success" name="submit">Edit Question</a>
+        {% elif auths > 0 %}
+          <a href="/editanswer/{{one_qs.id}}" class="btn btn-success" name="submit">Edit Answer</a>
+        {% else %}
+          <a href="/addanswer/{{one_qs.id}}" class="btn btn-success" name="submit">Answer Question</a>
+        {% endif %}
       </div>
     </div>
     <div class="card-footer text-center text-dark">
@@ -20,6 +26,10 @@
     <div class="card centred-answers bg-light">
       <div class="card-body">
         <h5 class="card-text">{{answer.body | safe}}</h5>
+        <div class="text-center">
+          <a href="" class="btn btn-primary">Upvote</a>
+          <a href="" class="btn btn-danger">Downvote</a>
+        </div>
       </div>
       <div class="card-footer text-muted text-center">
         <h6>Answered By {{answer.author}} on {{answer.ansDate}}</h6>
