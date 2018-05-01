@@ -1,14 +1,11 @@
 # SegFault
 
-This is a question and answer forum for all kinds of topics, with questions curated, answered, and moderated by the users themselves
+This is a question and answer forum for all kinds of topics, with questions curated, answered, and moderated by the users themselves.
 
-## Getting Started
-
-Run app.py, and open localhost:5000/
 
 ### Prerequisites
 
-Multiple libraries and modules are needed, but all of these are opensource and can be downloaded using the command line alone
+Multiple libraries and modules are needed, but all of these are opensource and can be downloaded using the command line alone.
 
 Instructions for Linux systems given below,
 
@@ -22,6 +19,19 @@ pip3 install Flask-WTF
 pip3 install passlib
 ```
 
+Setting up the database,
+
+```
+mysql -u root -p
+CREATE DATABASE segfault;
+USE segfault;
+CREATE TABLE users(user_id INT(11) PRIMARY KEY AUTO_INCREMENT, user_email VARCHAR(100), user_name VARCHAR(100), user_username VARCHAR(30), password VARCHAR(100), register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE questions(id BIGINT(15) PRIMARY KEY AUTO_INCREMENT, statement VARCHAR(280), poster VARCHAR(100), body TEXT, askDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE answers(id BIGINT(15) PRIMARY KEY AUTO_INCREMENT, qid TEXT, body TEXT, upvote INT(10) DEFAULT 0, author VARCHAR(100), ansDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP, downvote INT(10) DEFAULT 0);
+CREATE TABLE comments(id BIGINT(15) PRIMARY KEY AUTO_INCREMENT, ansid TEXT, body TEXT, author VARCHAR(100), comDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE votes(id INT(10) PRIMARY KEY AUTO_INCREMENT, ansid TEXT, userid TEXT);
+```
+
 ### Installing
 
 Step by step guide to get the app installed and running,
@@ -31,12 +41,12 @@ git clone https://github.com/SiddarthVijay/SegFault
 cd SegFault
 python3 app.py
 ```
-Now open a browser window,
-```
-localhost:5000/
-```
 
-You have the app up and running now
+You have the app up and running now.
+
+## Getting Started
+
+Run app.py, and open localhost:5000/
 
 ## Deployment
 

@@ -8,10 +8,10 @@
     <div class="card-body">
       <h5 class="card-title">Username: {{session.username}}</h5>
       <p class="card-text">E-Mail: {{email}}</p>
-      <p class="card-text">No. of Questions Asked: </p>
-      <p class="card-text">No. of Questions Answered: </p>
+      <p class="card-text">No. of Questions Asked: {{no_questions}}</p>
+      <p class="card-text">No. of Questions Answered: {{no_answers}}</p>
       <hr>
-      <a href="#" class="btn btn-primary">My Questions</a>
+      <a href="/dashboard" class="btn btn-primary">My Questions</a>
     </div>
     <div class="card-footer text-muted">
       Joined {{date}}

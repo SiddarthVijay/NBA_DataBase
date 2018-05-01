@@ -1,0 +1,28 @@
+.dashboard {
+  color: White;
+  left: 15%;
+  position: absolute;
+  top: 15%;
+  font-size: 3vh;
+}
+
+.table-curve {
+  border-radius: 0.5vh;
+}
+
+.center-head {
+  text-align: center;
+}
+
+a {
+  color: White;
+  transition: all ease-in-out 200ms;
+}
+a:hover {
+  color: #6c757d;
+  text-decoration: none;
+}
+
+.page-bar {
+  left: 35%;
+}

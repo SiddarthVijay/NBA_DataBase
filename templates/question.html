@@ -23,13 +23,18 @@
   </div>
 
   {% for answer in answers %}
-    <div class="card centred-answers bg-light">
+    {% set someid = loop.index %}
+    <div class="card centred-answers back-cream-main">
       <div class="card-body">
         <h5 class="card-text">{{answer.body | safe}}</h5>
         <div class="text-center">
-          <a href="" class="btn btn-primary">Upvote</a>
-          <a href="" class="btn btn-danger">Downvote</a>
+            <a href="{{url_for('upvote', ans_id= answer['id'], user_id = uid,q_id = one_qs.id)}}"><img id="votes" src="/static/images/upvote.png"></a>
         </div>
+        {% if answer['author'] == username %}
+          <div class="text-right">
+              <a href="{{url_for('delete_answer', aid= answer['id'],qid = one_qs.id)}}"><button class = "btn btn-primary submit">Delete</button></a>
+          </div>
+        {% endif %}
       </div>
       <div class="card-footer text-muted text-center">
         <h6>Answered By {{answer.author}} on {{answer.ansDate}}</h6>
@@ -40,18 +45,29 @@
         </a>
       </div>
       <div class="collapse" id="collapseExample-{{loop.index}}">
-        <div class="card card-body">
-          <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h6>
-          <h6><small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</small></h6>
+        <div class="card card-body comments">
+          {% for comment in comments %}
+            {% for dict in comment %}
+              {% if dict['ansid'] == (answer.id|string) %}
+                <div class="comments-body">
+                  <h6>{{dict.body}}</h6>
+                  <span class="small-text">By {{dict.author}} on {{dict.comDate}}</span>
+                  <hr>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
           <form class="form-inline" method="POST">
             <div class="form-group mb-2">
-              <input type="text" readonly class="form-control-plaintext small-txt"value="Add a Comment:">
+              <input type="text" readonly class="form-control-plaintext"value="Add a Comment:">
             </div>
             <div class="form-group mx-sm-3 mb-2">
-              <label for="inputPassword2" class="sr-only">Comment</label>
-              <input type="text" class="small-txt fill-comment" name="comment" placeholder="Type the comment here" value={{request.form.comment}}>
+              <div class="form-group">
+                {{ render_field(form1.body, class="form-control small-input" ) }}
+              </div>
+              <p><input class = "btn btn-success submit" type="submit" value="Comment"></p>
+              <input type="text" style="display:none;" name="idd" value="{{answer.id}}">
             </div>
-              <button type="submit" class="btn btn-primary mb-2 small-txt">Comment</button>
           </form>
         </div>
       </div>

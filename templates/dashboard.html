@@ -3,7 +3,7 @@
 {% block body %}
   <div class="dashboard">
     <div class="dashboard-top">
-      Welcome {{session.username}},
+      Welcome {{name}},
     </div>
     <hr>
     <div class="question-table">
@@ -11,7 +11,7 @@
       <table class="table table-striped">
         <thead class="thead-dark">
           <tr>
-            <th>ID</th>
+            <th>No</th>
             <th>Question</th>
             <th>Description</th>
             <th>Date Posted</th>
@@ -21,7 +21,7 @@
         </thead>
         {% for question in questions %}
           <tr>
-            <td>{{question.id}}</td>
+            <td>{{ loop.index }}</td>
             <td>{{question.statement}}</td>
             <td>{{question.body | safe}}</td>
             <td>{{question.askDate}}</td>

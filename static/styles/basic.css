@@ -11,7 +11,7 @@ body {
 a:active, a:focus {
   border: none;
   outline: 0;
-  -moz-outline-style: none
+  -moz-outline-style: none;
 }
 
 .navbar-custom {
