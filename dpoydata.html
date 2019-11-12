@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="dashboard" style="margin-left: -25vh;">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a class="page-link" href="/alldata">Players</a></li>
+      <li class="page-item"><a class="page-link" href="/coachdata">Coaches</a></li>
+      <li class="page-item"><a class="page-link" href="/ownerdata">Owners</a></li>
+      <li class="page-item"><a class="page-link" href="/mvpdata">MVP</a></li>
+      <li class="page-item"><a class="page-link" href="/dpoydata">DPOY</a></li>
+      <li class="page-item"><a class="page-link" href="/championdata">Champions</a></li>
+    </ul>
+  </nav>
+  <div class="questions-table">
+    <table class="table table-striped table-curve">
+      <thead class="thead-dark">
+        <tr class="center-head">
+          <th>NBA ID</th>
+          <th>Team ID</th>
+          <th>Year Won</th>
+          <th>Posted By</th>
+        </tr>
+      </thead>
+      {% for dpoy in qs %}
+      <tr>
+        <td style="width: 10vh;">{{dpoy.NBA_ID}}</td>
+        <td style="width: 10vh; text-align: center;">{{dpoy.TeamID}}</td>
+        <td style="width: 10vh; text-align: center;">{{dpoy.Year_Won}}</td>
+        <td style="width: 10vh; text-align: center;">{{dpoy.Posted_By}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

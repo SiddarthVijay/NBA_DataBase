@@ -32,7 +32,7 @@ app.debug = True
 # MySQL config
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'dbpass123'
+app.config['MYSQL_PASSWORD'] = 'DBpass123!'
 app.config['MYSQL_DB'] = 'segfault'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -525,8 +525,6 @@ def alldata():
 
     cur.close()
 
-
-
 @app.route('/questions',defaults={'id':1})
 @app.route('/questions/<int:id>/')
 def question(id):
@@ -776,9 +774,9 @@ def upvote(user_id,q_id,ans_id):
     cur = mysql.connection.cursor()
     result = cur.execute("SELECT * FROM answers WHERE id = %s",[ans_id])
 
-    if result == 0:
-        abort(404)
-    post = cur.fetchone()
+    # if result == 0:
+    #     abort(404)
+    # post = cur.fetchone()
     result = cur.execute("SELECT * FROM votes WHERE userid = %s AND ansid = %s",([user_id],[ans_id]))
     cur.close()
 

@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="dashboard" style="margin-left: -25vh;">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="/alldata">Players</a></li>
+        <li class="page-item"><a class="page-link" href="/coachdata">Coaches</a></li>
+        <li class="page-item"><a class="page-link" href="/ownerdata">Owners</a></li>
+        <li class="page-item"><a class="page-link" href="/mvpdata">MVP</a></li>
+        <li class="page-item"><a class="page-link" href="/dpoydata">DPOY</a></li>
+        <li class="page-item"><a class="page-link" href="/championdata">Champions</a></li>
+    </ul>
+  </nav>
+  <div class="questions-table">
+    <table class="table table-striped table-curve">
+      <thead class="thead-dark">
+        <tr class="center-head">
+          <th>Person ID</th>
+          <th>Owner Name</th>
+          <th>Team ID</th>
+          <th>Posted By</th>
+        </tr>
+      </thead>
+      {% for owner in qs %}
+      <tr>
+        <td style="width: 10vh;">{{owner.PersonID}}</td>
+        <td style="width: 10vh; text-align: center;">{{owner.Name}}</td>
+        <td style="width: 10vh; text-align: center;">{{owner.TeamID}}</td>
+        <td style="width: 10vh; text-align: center;">{{owner.Posted_By}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}
