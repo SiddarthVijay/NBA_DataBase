@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+{% block body %}
+  {% from "includes/_formhelpers.html" import render_field %}
+  <div class="centred-question">
+    <form method="POST">
+        <div class="form-group">
+            {{ render_field(form.NBA_ID , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.PersonID , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Player_Name , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Team_Name , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Age , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Height , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Weight , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.College , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Is_Injured , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Yearly_Salary , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Years_Left_On_Contract , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.No_Of_Games_Played , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Total_Points , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Country , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Latest_Award , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Date_Of_Winning_Award , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Jersey_Number , class="form-control") }}
+          </div>
+      <p><input class = "btn btn-success submit" type="submit" value="Insert Data"></p>
+    </form>
+  </div>
+{% endblock %}

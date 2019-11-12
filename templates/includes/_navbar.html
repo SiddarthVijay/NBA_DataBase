@@ -1,7 +1,6 @@
 <nav class="navbar-custom navbar navbar-inverse navbar-expand-lg fixed-top">
   <a class="navbar-brand navbar-custom" href="/">
-    <img src="{{ url_for('static', filename='images/icon.png') }}">
-    <strong>Seg</strong>Fault
+    <strong>NBA</strong> Database
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -19,6 +18,12 @@
       {% if session.logged_in %}
         <li class="nav-item active nav-item-a">
           <a class="nav-link" href="/addquestion">Ask a Question</a>
+        </li>
+        <li class="nav-item active nav-item-a">
+            <a class="nav-link" href="/alldata">All Data</a>
+          </li>
+        <li class="nav-item active nav-item-a">
+          <a class="nav-link" href="/adddata">Insert Data</a>
         </li>
       {% endif %}
       <li class="nav-item active nav-item-a">

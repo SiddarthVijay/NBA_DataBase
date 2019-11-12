@@ -32,7 +32,7 @@ app.debug = True
 # MySQL config
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Anush@1510'
+app.config['MYSQL_PASSWORD'] = 'dbpass123'
 app.config['MYSQL_DB'] = 'segfault'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -300,6 +300,239 @@ def addquestion():
         flash('Question Posted', 'success')
         return redirect(url_for('dashboard'))
     return render_template('addquestion.html', form=form)
+
+
+# Insert new Data
+@app.route('/adddata', methods=['GET', 'POST'])
+@is_loggedin
+def adddata():
+    return render_template('adddata.html')
+
+
+# Insert Player Class
+class InsertPlayerForm(Form):
+    NBA_ID = StringField('NBA ID', [validators.Length(min=1, max=280)])
+    PersonID = StringField('Person ID', [validators.Length(min=1, max=280)])
+    Player_Name = StringField('Player Name', [validators.Length(min=1, max=280)])
+    Team_Name = StringField('Team Name', [validators.Length(min=1, max=280)])
+    Age = StringField('Age', [validators.Length(min=1, max=280)])
+    Height = StringField('Height', [validators.Length(min=1, max=280)])
+    Weight = StringField('Weight', [validators.Length(min=1, max=280)])
+    College = StringField('College', [validators.Length(min=1, max=280)])
+    Is_Injured = StringField('Is the player injured? If yes press 1, if no press 0', [validators.Length(min=1, max=280)])
+    Yearly_Salary = StringField('Yearly Salary', [validators.Length(min=1, max=280)])
+    Years_Left_On_Contract = StringField('Years left on Current Contract', [validators.Length(min=1, max=280)])
+    No_Of_Games_Played = StringField('Games played in this season', [validators.Length(min=1, max=280)])
+    Total_Points = StringField('Total Points this season', [validators.Length(min=1, max=280)])
+    Country = StringField('Country', [validators.Length(min=1, max=280)])
+    Latest_Award = StringField('Latest Award won', [validators.Length(min=1, max=280)])
+    Date_Of_Winning_Award = StringField('Date of winning Latest Award', [validators.Length(min=1, max=280)])
+    Jersey_Number = StringField('Jersey Number', [validators.Length(min=1, max=280)])
+
+
+# Add Player Data
+@app.route('/adddata/insertplayer', methods=['GET', 'POST'])
+@is_loggedin
+def insertplayer():
+    form = InsertPlayerForm(request.form)
+    if request.method == 'POST' and form.validate():
+        NBA_ID = form.NBA_ID.data
+        PersonID = form.PersonID.data
+        Player_Name = form.Player_Name.data
+        Team_Name = form.Team_Name.data
+        Age = form.Age.data
+        Height = form.Height.data
+        Weight = form.Weight.data
+        College = form.College.data
+        Is_Injured = form.Is_Injured.data
+        Yearly_Salary = form.Yearly_Salary.data
+        Years_Left_On_Contract = form.Years_Left_On_Contract.data
+        No_Of_Games_Played = form.No_Of_Games_Played.data
+        Total_Points = form.Total_Points.data
+        Country = form.Country.data
+        Latest_Award = form.Latest_Award.data
+        Date_Of_Winning_Award = form.Date_Of_Winning_Award.data
+        Jersey_Number = form.Jersey_Number.data
+        
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO Player (NBA_ID, PersonID, Player_Name, Team_Name, Age, Height, Weight, College, Is_Injured, Yearly_Salary, Years_Left_On_Contract, No_Of_Games_Played, Total_Points, Country, Latest_Award, Date_Of_Winning_Award, Jersey_Number, Posted_By) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(NBA_ID, PersonID, Player_Name, Team_Name, Age, Height, Weight, College, Is_Injured, Yearly_Salary, Years_Left_On_Contract, No_Of_Games_Played, Total_Points, Country, Latest_Award, Date_Of_Winning_Award, Jersey_Number, session['username']))
+
+        mysql.connection.commit()
+        cur.close()
+        flash('Player Inserted', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('insertplayer.html', form=form)
+
+
+# Insert Coach Class
+class InsertCoachForm(Form):
+    PersonID = StringField('Person ID', [validators.Length(min=1, max=280)])
+    Name = StringField('Coach Name', [validators.Length(min=1, max=280)])
+    TeamID = StringField('Team ID', [validators.Length(min=1, max=280)])
+
+# Add Coach Data
+@app.route('/adddata/insertcoach', methods=['GET', 'POST'])
+@is_loggedin
+def insertcoach():
+    form = InsertCoachForm(request.form)
+    if request.method == 'POST' and form.validate():
+        PersonID = form.PersonID.data
+        Name = form.Name.data
+        TeamID = form.TeamID.data
+        
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO Coach (PersonID, Name, TeamID, Posted_By) VALUES(%s, %s, %s, %s)",(PersonID, Name, TeamID, session['username']))
+
+        mysql.connection.commit()
+        cur.close()
+        flash('Coach Inserted', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('insertcoach.html', form=form)
+
+
+# Insert Owner Class
+class InsertOwnerForm(Form):
+    PersonID = StringField('Person ID', [validators.Length(min=1, max=280)])
+    Name = StringField('Owner Name', [validators.Length(min=1, max=280)])
+    TeamID = StringField('Team ID', [validators.Length(min=1, max=280)])
+
+# Add Owner Data
+@app.route('/adddata/insertowner', methods=['GET', 'POST'])
+@is_loggedin
+def insertowner():
+    form = InsertOwnerForm(request.form)
+    if request.method == 'POST' and form.validate():
+        PersonID = form.PersonID.data
+        Name = form.Name.data
+        TeamID = form.TeamID.data
+        
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO Owner (PersonID, Name, TeamID, Posted_By) VALUES(%s, %s, %s, %s)",(PersonID, Name, TeamID, session['username']))
+
+        mysql.connection.commit()
+        cur.close()
+        flash('Coach Inserted', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('insertowner.html', form=form)
+
+# Insert MVP Class
+class InsertMVPForm(Form):
+    NBA_ID = StringField('NBA ID', [validators.Length(min=1, max=280)])
+    TeamID = StringField('Team ID', [validators.Length(min=1, max=280)])
+    Year_Won = StringField('Year Won', [validators.Length(min=1, max=280)])
+
+
+# Add MVP Data
+@app.route('/adddata/insertmvp', methods=['GET', 'POST'])
+@is_loggedin
+def insertmvp():
+    form = InsertMVPForm(request.form)
+    if request.method == 'POST' and form.validate():
+        NBA_ID = form.NBA_ID.data
+        TeamID = form.TeamID.data
+        Year_Won = form.Year_Won.data
+        
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO MVP (NBA_ID, TeamID, Year_Won, Posted_By) VALUES(%s, %s, %s, %s)",(NBA_ID, TeamID, Year_Won, session['username']))
+
+        mysql.connection.commit()
+        cur.close()
+        flash('MVP Inserted', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('insertmvp.html', form=form)
+
+
+# Insert DPOY Class
+class InsertDPOYForm(Form):
+    NBA_ID = StringField('NBA ID', [validators.Length(min=1, max=280)])
+    TeamID = StringField('Team ID', [validators.Length(min=1, max=280)])
+    Year_Won = StringField('Year Won', [validators.Length(min=1, max=280)])
+
+
+# Add DPOY Data
+@app.route('/adddata/insertdpoy', methods=['GET', 'POST'])
+@is_loggedin
+def insertdpoy():
+    form = InsertDPOYForm(request.form)
+    if request.method == 'POST' and form.validate():
+        NBA_ID = form.NBA_ID.data
+        TeamID = form.TeamID.data
+        Year_Won = form.Year_Won.data
+        
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO DPOY (NBA_ID, TeamID, Year_Won, Posted_By) VALUES(%s, %s, %s, %s)",(NBA_ID, TeamID, Year_Won, session['username']))
+
+        mysql.connection.commit()
+        cur.close()
+        flash('DPOY Inserted', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('insertdpoy.html', form=form)
+
+
+# Insert Champion Class
+class InsertChampionForm(Form):
+    TeamID = StringField('Team ID', [validators.Length(min=1, max=280)])
+    Year_Won = StringField('Year Won', [validators.Length(min=1, max=280)])
+    Finals_MVP_NBA_ID = StringField('Finals MVP NBA ID', [validators.Length(min=1, max=280)])
+
+
+# Add Champion Data
+@app.route('/adddata/insertchampion', methods=['GET', 'POST'])
+@is_loggedin
+def insertchampion():
+    form = InsertChampionForm(request.form)
+    if request.method == 'POST' and form.validate():
+        TeamID = form.TeamID.data
+        Year_Won = form.Year_Won.data
+        Finals_MVP_NBA_ID = form.Finals_MVP_NBA_ID.data
+        
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO Championship (TeamID, Year_Won, Finals_MVP_NBA_ID, Posted_By) VALUES(%s, %s, %s, %s)",(TeamID, Year_Won, Finals_MVP_NBA_ID, session['username']))
+
+        mysql.connection.commit()
+        cur.close()
+        flash('Champion Inserted', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('insertchampion.html', form=form)
+
+
+@app.route('/alldata',defaults={'id':1})
+@app.route('/alldata/<int:id>/')
+def alldata(id):
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT * FROM questions ORDER BY id")
+
+    skip = (id-1)z
+    last = floor(result)
+
+    if last == 0:
+        last  = 1
+
+    cur.execute("SELECT * FROM questions ORDER BY id DESC LIMIT %s,%s",(skip,1))
+    qs = cur.fetchall()
+
+    if id > last :
+        return redirect(url_for('question',id = last))
+    if result > 0:
+        return render_template('questions.html',last=last, qs=qs,id=id)
+    else:
+        msg = "No questions found"
+        return render_template('questions.html',msg=msg,id=id)
+
+    cur.close()
+
 
 
 @app.route('/questions',defaults={'id':1})

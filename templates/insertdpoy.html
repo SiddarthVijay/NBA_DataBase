@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block body %}
+  {% from "includes/_formhelpers.html" import render_field %}
+  <div class="centred-question">
+    <form method="POST">
+          <div class="form-group">
+            {{ render_field(form.NBA_ID , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.TeamID , class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.Year_Won , class="form-control") }}
+          </div>
+      <p><input class = "btn btn-success submit" type="submit" value="Insert Data"></p>
+    </form>
+  </div>
+{% endblock %}
