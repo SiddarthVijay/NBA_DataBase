@@ -127,21 +127,37 @@ def dashboard():
     # Create cursor
     cur = mysql.connection.cursor()
 
-    # Get questions
-    results = cur.execute("SELECT * FROM questions where poster = %s", [username])
+    # Get Players
+    player_results = cur.execute("SELECT * FROM Player where Posted_By = %s", [username])
+    players = cur.fetchall()
 
-    questions = cur.fetchall()
+    # Get Coaches
+    coaches_results = cur.execute("SELECT * FROM Coach where Posted_By = %s", [username])
+    coaches = cur.fetchall()
+
+    # Get Owner
+    owners_results = cur.execute("SELECT * FROM Owner where Posted_By = %s", [username])
+    owners = cur.fetchall()
+
+    # Get MVP
+    mvps_results = cur.execute("SELECT * FROM MVP where Posted_By = %s", [username])
+    mvps = cur.fetchall()
+
+    # Get DPOY
+    dpoys_results = cur.execute("SELECT * FROM DPOY where Posted_By = %s", [username])
+    dpoys = cur.fetchall()
+
+    # Get Champions
+    champions_results = cur.execute("SELECT * FROM Championship where Posted_By = %s", [username])
+    champions = cur.fetchall()
+
     # Get user by username
-    result = cur.execute("SELECT * FROM users where user_username = %s", [username])
-    if result > 0:
-        data = cur.fetchone()
-        name = data['user_name']
+    user_results = cur.execute("SELECT * FROM users where user_username = %s", [username])
+    if user_results > 0:
+        user = cur.fetchone()
+        name = user['user_name']
 
-    if results>0:
-        return render_template('dashboard.html', questions=questions, name=name)
-    else:
-        msg = "No Questions Asked Yet"
-        return render_template('dashboard.html', msg=msg, name=name)
+    return render_template('dashboard.html', name=name, players=players, coaches=coaches, owners=owners, mvps=mvps, dpoys=dpoys, champions=champions)
 
 
 # Accessing the user profile
@@ -672,20 +688,20 @@ def editquestion(id):
     return render_template('editquestion.html',form=form,one_qs=one_qs)
 
 
-# Delete questions
-@app.route('/delete_question/<string:id>', methods=['POST'])
+# Delete Player
+@app.route('/delete_player/<string:id>', methods=['POST'])
 @is_loggedin
-def delete_question(id):
+def delete_player(id):
     # Create a cursor
     cur = mysql.connection.cursor()
 
     # Execute Cursor
-    cur.execute("DELETE FROM questions where id=%s", [id])
+    cur.execute("DELETE FROM Player where NBA_ID=%s", [id])
 
     mysql.connection.commit()
     cur.close()
 
-    flash ('Question Deleted','success')
+    flash ('Player Deleted','success')
     return redirect(url_for('dashboard'))
 
 
@@ -768,56 +784,6 @@ def questions(id):
     else:
         msg = "Not Answered Yet"
         return render_template('question.html',no_of_up=ups,uid=uid, form1=form1,one_qs=one_qs, msg=msg, username=username, auths=auths,comments=comments)
-
-
-@app.route('/upvote/<string:user_id>/<string:q_id>/<int:ans_id>/')
-@is_loggedin
-def upvote(user_id,q_id,ans_id):
-    cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * FROM answers WHERE id = %s",[ans_id])
-
-    if result == 0:
-        abort(404)
-    post = cur.fetchone()
-    result = cur.execute("SELECT * FROM votes WHERE userid = %s AND ansid = %s",([user_id],[ans_id]))
-    cur.close()
-
-    if result > 0:
-        cur = mysql.connection.cursor()
-
-        cur.execute("DELETE FROM votes WHERE userid = %s AND ansid = %s",([user_id],[ans_id]))
-
-        mysql.connection.commit()
-
-        number = cur.execute("SELECT * FROM votes WHERE ansid = %s",[ans_id])
-
-        cur.execute("UPDATE answers SET upvote = %s WHERE id = %s",(number,ans_id))
-
-        mysql.connection.commit()
-
-        cur.close()
-
-        flash("Upvote Removed","danger")
-
-        return redirect(url_for('questions',id=q_id))
-    else :
-        cur = mysql.connection.cursor()
-
-        cur.execute("INSERT INTO votes(ansid,userid) VALUES(%s,%s)",([ans_id],[user_id]))
-
-        mysql.connection.commit()
-
-        number = cur.execute("SELECT * FROM votes WHERE ansid = %s",[ans_id])
-
-        cur.execute("UPDATE answers SET upvote = %s WHERE id = %s",(number,ans_id))
-        mysql.connection.commit()
-
-        cur.close()
-
-        flash("Upvoted","success")
-
-        return redirect(url_for('questions',id=q_id))
-    return redirect(url_for('questions',id=q_id))
 
 
 class AnswerForm(Form):

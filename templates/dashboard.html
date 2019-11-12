@@ -7,27 +7,25 @@
     </div>
     <hr>
     <div class="question-table">
-      <h2>Your Questions,</h2>
+      <h2>Your Players,</h2>
       <table class="table table-striped">
         <thead class="thead-dark">
           <tr>
             <th>No</th>
-            <th>Question</th>
-            <th>Description</th>
-            <th>Date Posted</th>
+            <th>NBA ID</th>
+            <th>Player Name</th>
             <th></th>
             <th></th>
           </tr>
         </thead>
-        {% for question in questions %}
+        {% for player in players %}
           <tr>
             <td>{{ loop.index }}</td>
-            <td>{{question.statement}}</td>
-            <td>{{question.body | safe}}</td>
-            <td>{{question.askDate}}</td>
-            <td><a href="editquestion/{{question.id}}" class="btn btn-secondary pull-right">Edit</a></td>
+            <td>{{player.NBA_ID}}</td>
+            <td>{{player.Player_Name}}</td>
+            <td><a href="editquestion/{{player.NBA_ID}}" class="btn btn-secondary pull-right">Edit</a></td>
             <td>
-              <form action="{{ url_for('delete_question', id=question.id) }}" method="POST">
+              <form action="{{ url_for('delete_player', id=player.NBA_ID) }}" method="POST">
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="submit" class="btn btn-danger" value="Delete">
               </form>
