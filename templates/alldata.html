@@ -1,90 +1,63 @@
 {% extends 'layout.html' %}
 {% block body %}
-<div class="dashboard">
+<div class="dashboard" style="margin-left: -25vh;">
   <nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item"><a class="page-link" href="/alldata">Players</a></li>
-    <li class="page-item"><a class="page-link" href="/questions/unanswered">Coaches</a></li>
-    <li class="page-item"><a class="page-link" href="/questions/answered">Owners</a></li>
-  </ul>
-</nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a class="page-link" href="/alldata">Players</a></li>
+      <li class="page-item"><a class="page-link" href="/questions/Coaches">Coaches</a></li>
+      <li class="page-item"><a class="page-link" href="/questions/Owners">Owners</a></li>
+      <li class="page-item"><a class="page-link" href="/questions/mvp">MVP</a></li>
+      <li class="page-item"><a class="page-link" href="/questions/dpoy">DPOY</a></li>
+      <li class="page-item"><a class="page-link" href="/questions/champion">Champions</a></li>
+    </ul>
+  </nav>
   <div class="questions-table">
     <table class="table table-striped table-curve">
       <thead class="thead-dark">
         <tr class="center-head">
-          <th>Question</th>
-          <th>Author</th>
-          <th>Date</th>
+          <th>NBA ID</th>
+          <th>Person ID</th>
+          <th>Player Name</th>
+          <th>Team Name</th>
+          <th>Age</th>
+          <th>Height</th>
+          <th>Weight</th>
+          <th>College</th>
+          <th>Injured?</th>
+          <th>Salary</th>
+          <th>Contracted Years</th>
+          <th>Games Played</th>
+          <th>Points Scored</th>
+          <th>PPG</th>
+          <th>Country</th>
+          <th>Awards</th>
+          <th>Number</th>
+          <th>Posted By</th>
         </tr>
       </thead>
-    {% for quest in qs %}
+      {% for player in qs %}
       <tr>
-        <td style="width: 70vh;"><a href="/question/{{quest.id}}">{{quest.statement}}</a></td>
-        <td style="width: 35vh; text-align: center;">{{quest.poster}}</td>
-        <td style="width: 35vh;">{{quest.askDate}}</td>
+        <td style="width: 10vh;">{{player.NBA_ID}}</td>
+        <td style="width: 10vh;">{{player.PersonID}}</td>
+        <td style="width: 10vh; text-align: center;">{{player.Player_Name}}</td>
+        <td style="width: 10vh; text-align: center;">{{player.Team_Name}}</td>
+        <td style="width: 10vh;">{{player.Age}}</td>
+        <td style="width: 10vh;">{{player.Height}}</td>
+        <td style="width: 10vh;">{{player.Weight}}</td>
+        <td style="width: 10vh;">{{player.College}}</td>
+        <td style="width: 10vh;">{{player.Is_Injured}}</td>
+        <td style="width: 10vh;">{{player.Yearly_Salary}}</td>
+        <td style="width: 10vh;">{{player.Years_Left_On_Contract}}</td>
+        <td style="width: 10vh;">{{player.No_Of_Games_Played}}</td>
+        <td style="width: 10vh;">{{player.Total_Points}}</td>
+        <td style="width: 10vh;">{{player.Avg_Points}}</td>
+        <td style="width: 10vh;">{{player.Country}}</td>
+        <td style="width: 10vh;">{{player.Latest_Award}}</td>
+        <td style="width: 10vh;">{{player.Jersey_Number}}</td>
+        <td style="width: 10vh; text-align: center;">{{player.Posted_By}}</td>
       </tr>
-    {% endfor %}
-  </table>
+      {% endfor %}
+    </table>
+  </div>
 </div>
-{% if last > 1 %}
-<div class="">
-  <nav class="fixed-bottom page-bar">
-    <ul class="pagination">
-        {% if id == 1 %}
-          <li class="page-item disabled">
-            <a class="page-link" href="#" >Previous</a>
-          </li>
-          <li class="page-item active">
-            <a class="page-link" href="/questions/{{id}}/">{{id}}<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="/questions/{{id+1}}/">{{id+1}}</a>
-          </li>
-          {% if last > 2 %}
-            <li class="page-item">
-              <a class="page-link" href="/questions/{{id+2}}/">{{id+2}}</a>
-            </li>
-          {% endif %}
-          <li class="page-item">
-            <a class="page-link" href="/questions/{{id+1}}/">Next</a>
-          </li>
-        {% elif id == last %}
-          <li class="page-item ">
-            <a class="page-link" href="/questions/{{id-1}}/" >Previous</a>
-          </li>
-          {% if last != 2 %}
-            <li class="page-item">
-              <a class="page-link" href="/questions/{{id-2}}/">{{id-2}}</a>
-            </li>
-          {% endif %}
-          <li class="page-item">
-            <a class="page-link" href="/questions/{{id-1}}/">{{id-1}}</a>
-          </li>
-          <li class="page-item active">
-            <a class="page-link" href="/questions/{{id}}/">{{id}}<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="page-item disabled">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        {% else %}
-          <li class="page-item">
-            <a class="page-link" href="/questions/{{id-1}}/" >Previous</a>
-          </li>
-          <li class="page-item ">
-            <a class="page-link" href="/questions/{{id-1}}/">{{id-1}}</a>
-          </li>
-          <li class="page-item active">
-            <a class="page-link" href="/questions/{{id}}/">{{id}}<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="/questions/{{id+1}}/">{{id+1}}</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="/questions/{{id+1}}/">Next</a>
-          </li>
-        {% endif %}
-    </ul>
-  </nav>
-</div>
-{% endif %}
 {% endblock %}

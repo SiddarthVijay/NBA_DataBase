@@ -508,28 +508,20 @@ def insertchampion():
     return render_template('insertchampion.html', form=form)
 
 
-@app.route('/alldata',defaults={'id':1})
-@app.route('/alldata/<int:id>/')
-def alldata(id):
+@app.route('/alldata')
+def alldata():
     cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * FROM questions ORDER BY id")
+    result = cur.execute("SELECT * FROM Player")
 
-    skip = (id-1)z
-    last = floor(result)
-
-    if last == 0:
-        last  = 1
-
-    cur.execute("SELECT * FROM questions ORDER BY id DESC LIMIT %s,%s",(skip,1))
+    cur.execute("SELECT * FROM Player")
     qs = cur.fetchall()
+    print(qs)
 
-    if id > last :
-        return redirect(url_for('question',id = last))
     if result > 0:
-        return render_template('questions.html',last=last, qs=qs,id=id)
+        return render_template('alldata.html', qs=qs)
     else:
-        msg = "No questions found"
-        return render_template('questions.html',msg=msg,id=id)
+        msg = "No Players found"
+        return render_template('alldata.html',msg=msg)
 
     cur.close()
 
